@@ -7,96 +7,96 @@
     <link rel="stylesheet" href="migranti2.css">
 </head>
 <body>
+    <br>
+    <h1 class="title">Grafico dati immigrazione</h1>
+    <form action="">
+        <input class="form-control" type="file" id="fileUp" onchange="readFile(this)">
         <br>
-        <h1 class="title">Grafico dati immigrazione</h1>
-        <form action="">
-            <input class="form-control" type="file" id="fileUp" onchange="readFile(this)">
-            <br>
-            <input class="btn btn-outline-g btn-lg" type="button" value="Genera il grafico" onclick="draw()">
-        </form>
-        <canvas id="canva" width="1500%" height="700%"></canvas>
+        <input class="btn btn-outline-g btn-lg" type="button" value="Genera il grafico" onclick="draw()">
+    </form>
+    <canvas id="canva" width="1000" height="500"></canvas>
 </body>
-  <script>
-  let result = []
+<script>
+    let result = '';
 
-    let numSegmentiY = 10
-    
+    let numSegmentiY = 10;
     let dotEnable = false;
-    
+
     function readFile(input) {
         let file = input.files[0];
-      let reader = new FileReader();
-       reader.readAsText(file);
-      reader.onload = function() {
-          result = reader.result;
+        let reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function() {
+            result = reader.result;
         };
-      reader.onerror = function() {
-          alert(reader.error);
+        reader.onerror = function() {
+            alert(reader.error);
         };
     }
-    
+
     function draw() {
-    if (!result.length) {
-        alert("File mancante");
-    } else {
-        let c = document.getElementById("canva");
-        let larg = c.width;
-        let alt = c.height;
-        let ctx = c.getContext("2d");
-        ctx.lineWidth = 2;
+        if (!result.length) {
+            alert("File mancante");
+        } else {
+            let c = document.getElementById("canva");
+            let larg = c.width;
+            let alt = c.height;
+            let ctx = c.getContext("2d");
+            ctx.lineWidth = 2;
 
-        ctx.moveTo(larg / 15, alt / 6);
-        ctx.lineTo(larg / 15, alt / 1.1);
+            ctx.moveTo(larg / 15, alt / 6);
+            ctx.lineTo(larg / 15, alt / 1.1);
 
-        ctx.moveTo(l
-        let csv = result.split("\n");
-
-        let lungXarg / 20, alt / 15 * 13);
-        ctx.lineTo(larg / 1.05, alt / 15 * 13);
- = larg - 50;
-        const divisoreX = Math.round(lungX / csv.length);
-
-        let lungY = alt - 150;
-        const divisoreY = Math.round(lungY / numSegmentiY);
-
-        let max = Math.max(...csv.slice(1).map(row => Number(row.split(',')[1].replaceAll('"', '').trim())));
-
-        let newMax = Math.ceil(max / numSegmentiY) * numSegmentiY;
-
-        for (let i = 0; i < numSegmentiY; i++) {
-            let yPosition = alt / 15 * 12 - (divisoreY * i);
-            ctx.moveTo(larg / 15, yPosition);
-            ctx.lineTo(larg / 15 - 30, yPosition);
-            ctx.fillText(Math.round((newMax / numSegmentiY) * (i + 1)), larg / 15 - 50, yPosition - 5);
-        }
-        ctx.stroke();
-
-        ctx.moveTo(larg / 15, alt / 1.155);
-        for (let i = 1; i < csv.length; i++) {
-            let effData = csv[i].split(",");
-            let yValue = Number(effData[1].replaceAll('"', '').trim()) / newMax; 
-            let xPosition = larg / 15 + divisoreX * i;
-            let yPosition = alt / 1.155 - lungY * yValue;
-
-            ctx.lineTo(xPosition, yPosition);
+            ctx.moveTo(larg / 15, alt / 1.155);
+            ctx.lineTo(larg / 1.05, alt / 1.155);
             ctx.stroke();
-            if (dotEnable) {
-                drawPoint(xPosition, yPosition, ctx);
-            }
-        }
-        ctx.stroke();
-    }
-}
 
-function drawPoint(x, y, canvas) {
-    canvas.beginPath();
-    canvas.fillStyle = "red";
-    canvas.arc(x, y, 5, 0, Math.PI * 2, true);
-    canvas.fill();
-}
+            let csv = result.split("\n");
+
+            let lungX = larg - 50;
+            const divisoreX = Math.round(lungX / csv.length);
+
+            let lungY = alt - 150;
+            const divisoreY = Math.round(lungY / numSegmentiY);
+
+            let max = Math.max(...csv.slice(1).map(row => Number(row.split(',')[1].replaceAll('"', '').trim())));
+
+            let newMax = Math.ceil(max / numSegmentiY) * numSegmentiY;
+
+            for (let i = 0; i < numSegmentiY; i++) {
+                let yPosition = alt / 15 * 12 - (divisoreY * i);
+                ctx.moveTo(larg / 15, yPosition);
+                ctx.lineTo(larg / 15 - 30, yPosition);
+                ctx.fillText(Math.round((newMax / numSegmentiY) * (i + 1)), larg / 15 - 50, yPosition - 5);
+            }
+            ctx.stroke();
+
+            ctx.moveTo(larg / 15, alt / 1.155);
+            for (let i = 1; i < csv.length; i++) {
+                let effData = csv[i].split(",");
+                let yValue = Number(effData[1].replaceAll('"', '').trim()) / newMax;
+                let xPosition = larg / 15 + divisoreX * i;
+                let yPosition = alt / 1.155 - lungY * yValue;
+
+                ctx.lineTo(xPosition, yPosition);
+                ctx.stroke();
+                if (dotEnable) {
+                    drawPoint(xPosition, yPosition, ctx);
+                }
+            }
+            ctx.stroke();
+        }
+    }
+
+    function drawPoint(x, y, canvas) {
+        canvas.beginPath();
+        canvas.fillStyle = "red";
+        canvas.arc(x, y, 5, 0, Math.PI * 2, true);
+        canvas.fill();
+    }
 
     function getPow(numb) {
-        return(Number(numb.toString().length))
+        return Number(numb.toString().length);
     }
-    </script>
+</script>
 </html>
