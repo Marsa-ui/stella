@@ -20,6 +20,7 @@
         let result = [];
         let numSegmentiY = 10;
         let dotEnable = false;
+        let anni = [];
 
         function readFile(input) {
             let file = input.files[0];
@@ -27,6 +28,7 @@
             reader.readAsText(file);
             reader.onload = function() {
                 result = reader.result;
+                anni = result.split("\n").map(row => row.split(",")[0].replace(/"/g, '').trim());
             };
             reader.onerror = function() {
                 alert(reader.error);
@@ -81,6 +83,8 @@
                     if (dotEnable) {
                         drawPoint(xPosition, yPosition, ctx);
                     }
+
+                    ctx.fillText(anni[i], xPosition - 10, alt / 1.05);
                 }
                 ctx.stroke();
             }
