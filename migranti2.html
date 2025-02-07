@@ -83,13 +83,6 @@
                     }
                 }
                 ctx.stroke();
-
-                for (let i = 1; i < csv.length; i++) {
-                    let effData = csv[i].split(",");
-                    let year = effData[0].replaceAll('"', '').trim();
-                    let xPosition = larg / 15 + divisoreX * (i - 1);
-                    ctx.fillText(year, xPosition, alt / 1.12);
-                }
             }
         }
 
@@ -106,5 +99,3 @@
     </script>
 </body>
 </html>
-
-
