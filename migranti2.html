@@ -52,7 +52,7 @@
                 let csv = result.split("\n");
 
                 let lungX = larg - 50;
-                const divisoreX = Math.round(lungX / csv.length);
+                const divisoreX = Math.round(lungX / (csv.length - 1));
 
                 let lungY = alt - 150;
                 const divisoreY = Math.round(lungY / numSegmentiY);
@@ -73,7 +73,7 @@
                 for (let i = 1; i < csv.length; i++) {
                     let effData = csv[i].split(",");
                     let yValue = Number(effData[1].replaceAll('"', '').trim()) / newMax; 
-                    let xPosition = larg / 15 + divisoreX * i;
+                    let xPosition = larg / 15 + divisoreX * (i - 1);
                     let yPosition = alt / 1.155 - lungY * yValue;
 
                     ctx.lineTo(xPosition, yPosition);
@@ -87,7 +87,7 @@
                 for (let i = 1; i < csv.length; i++) {
                     let effData = csv[i].split(",");
                     let year = effData[0].replaceAll('"', '').trim();
-                    let xPosition = larg / 15 + divisoreX * i;
+                    let xPosition = larg / 15 + divisoreX * (i - 1);
                     ctx.fillText(year, xPosition, alt / 1.12);
                 }
             }
@@ -106,4 +106,5 @@
     </script>
 </body>
 </html>
+
 
